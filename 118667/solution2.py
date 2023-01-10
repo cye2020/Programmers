@@ -19,12 +19,12 @@ def solution(queue1, queue2):
         if now == target:
             return cnt
 
-        if now > target:
+        elif now > target:
             n = queue[i]
             i = (i + 1) % t
             now -= n
 
-        elif now < target:
+        else:
             n = queue[j]
             j = (j + 1) % (t)
             now += n
