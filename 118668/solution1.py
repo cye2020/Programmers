@@ -6,15 +6,14 @@ class Problem:
         self.cop_rwd = cop_rwd
         self.cost = cost
 
-
 def solution(alp, cop, problems):
     max_alp_req = 0
     max_cop_req = 0
     for i in range(len(problems)):
-        problem = Problem(*problems[i])
-        problems[i] = problem
-        max_alp_req = max(problem.alp_req - alp, max_alp_req)
-        max_cop_req = max(problem.cop_req - cop, max_cop_req)
+        p = Problem(*problems[i])
+        problems[i] = p
+        max_alp_req = max(p.alp_req - alp, max_alp_req)
+        max_cop_req = max(p.cop_req - cop, max_cop_req)
     
     DP = [[i+j for i in range(max_cop_req + 1)] for j in range(max_alp_req + 1)]
     problems.append(Problem(0, 0, 1, 0, 1))
@@ -22,16 +21,11 @@ def solution(alp, cop, problems):
     
     for i in range(max_alp_req + 1):
         for j in range(max_cop_req + 1):
-            for problem in problems:
-                alp_req = problem[0]
-                cop_req = problem[1]
-                if (alp + i >= alp_req) and (cop + j >= cop_req):
-                    alp_rwd = problem[2]
-                    cop_rwd = problem[3]
-                    cost = problem[4]
-                    next_i = min(i+alp_rwd, max_alp_req)
-                    next_j = min(j+cop_rwd, max_cop_req)
-                    DP[next_i][next_j] = min(DP[i][j] + cost, DP[next_i][next_j])
+            for p in problems:
+                if (alp + i >= p.alp_req) and (cop + j >= p.cop_req):
+                    next_i = min(i+p.alp_rwd, max_alp_req)
+                    next_j = min(j+p.cop_rwd, max_cop_req)
+                    DP[next_i][next_j] = min(DP[i][j] + p.cost, DP[next_i][next_j])
     answer = DP[max_alp_req][max_cop_req]
     return answer
 
@@ -46,5 +40,5 @@ Q4 = {
 }
 
 print(Q4["problems"])
-answer = solution(*Q4.values())
+answer = solution(**Q4)
 print(answer)
