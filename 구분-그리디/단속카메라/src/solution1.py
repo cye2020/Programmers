@@ -1,3 +1,5 @@
+# 시간 초과
+
 from collections import defaultdict
 from copy import deepcopy
 
@@ -23,7 +25,7 @@ class GateDict(dict):
         self[key] = Gate(key)
         return self[key]
 
-def solution(routes):
+def solution1(routes):
     for i, route in enumerate(routes):
         gatein = min(route[0], route[1])
         gateout = max(route[0], route[1])

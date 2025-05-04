@@ -1,5 +1,6 @@
 import pytest
-from src.solution1 import solution
+from src.solution1 import solution1
+from src.solution2 import solution2
 
 
 @pytest.mark.parametrize("routes, result", [
@@ -9,4 +10,5 @@ from src.solution1 import solution
     ), 
 ])
 def test_solution(routes, result):
-    assert solution(routes) == result
+    # assert solution1(routes) == result
+    assert solution2(routes) == result
