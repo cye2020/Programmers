@@ -1,5 +1,6 @@
 import pytest
-from src.solution1 import solution
+# from src.solution1 import solution
+from src.solution2 import solution
 
 
 @pytest.mark.parametrize("n, costs, result", [
