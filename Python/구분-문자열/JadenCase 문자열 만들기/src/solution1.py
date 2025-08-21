@@ -1,8 +1,10 @@
 def solution(s):
-    lst = []
-    for word in s.lower().split():
-        nword = list(word)
-        nword[0] = nword[0].upper()
-        lst.append(''.join(nword))
-    answer = ' '.join(lst)
+    answer = ''
+    prev = ' '
+    for char in s:
+        if prev == ' ' and char != ' ':
+            answer += char.upper()
+        else:
+            answer += char.lower()
+        prev = char
     return answer
