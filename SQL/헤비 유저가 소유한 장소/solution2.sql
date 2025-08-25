@@ -1,0 +1,15 @@
+SELECT
+    p1.ID,
+    p1.NAME,
+    p1.HOST_ID
+FROM
+    PLACES p1
+INNER JOIN
+    PLACES p2
+    ON p1.HOST_ID = p2.HOST_ID
+    AND p1.ID != p2.ID
+GROUP BY
+    p1.ID
+ORDER BY
+    p1.ID
+;
