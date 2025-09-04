@@ -1,0 +1,12 @@
+SELECT
+    outs.ANIMAL_ID,
+    outs.NAME
+FROM
+    ANIMAL_OUTS AS outs
+LEFT JOIN ANIMAL_INS AS ins
+ON 1 = 1
+    AND ins.ANIMAL_ID = outs.ANIMAL_ID
+WHERE ins.ANIMAL_ID IS NULL
+ORDER BY
+    ins.ANIMAL_ID ASC
+;
