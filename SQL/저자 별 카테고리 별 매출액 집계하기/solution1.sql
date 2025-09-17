@@ -1,0 +1,33 @@
+WITH bs AS (
+    SELECT
+        BOOK_ID,
+        SUM(SALES) AS SALES
+    FROM
+        BOOK_SALES
+    WHERE 1 = 1
+        AND DATE_FORMAT(SALES_DATE, '%Y-%m') = '2022-01'
+    GROUP BY
+        BOOK_ID
+)
+
+
+SELECT
+    au.AUTHOR_ID,
+    au.AUTHOR_NAME,
+    b.CATEGORY,
+    SUM(b.PRICE * bs.SALES) AS TOTAL_SALES
+FROM
+    BOOK AS b
+INNER JOIN bs
+ON 1 = 1
+    AND b.BOOK_ID = bs.BOOK_ID
+INNER JOIN AUTHOR AS au
+ON 1 = 1
+    AND b.AUTHOR_ID = au.AUTHOR_ID
+GROUP BY
+    au.AUTHOR_ID,
+    b.CATEGORY
+ORDER BY
+    au.AUTHOR_ID ASC,
+    b.CATEGORY DESC
+;
