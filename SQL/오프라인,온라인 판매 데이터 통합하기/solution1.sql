@@ -1,0 +1,25 @@
+SELECT
+    *
+FROM (
+    SELECT
+        DATE_FORMAT(SALES_DATE, '%Y-%m-%d') AS SALES_DATE,
+        PRODUCT_ID,
+        USER_ID,
+        SALES_AMOUNT 
+    FROM
+        ONLINE_SALE
+    UNION
+    SELECT 
+        DATE_FORMAT(SALES_DATE, '%Y-%m-%d') AS SALES_DATE,
+        PRODUCT_ID,
+        NULL AS USER_ID,
+        SALES_AMOUNT
+    FROM OFFLINE_SALE
+) AS sales
+WHERE 1 = 1
+    AND DATE_FORMAT(SALES_DATE, '%Y-%m') = '2022-03'
+ORDER BY
+    SALES_DATE ASC,
+    PRODUCT_ID ASC,
+    USER_ID ASC
+;
