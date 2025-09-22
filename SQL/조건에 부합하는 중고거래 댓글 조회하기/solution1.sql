@@ -1,0 +1,25 @@
+WITH bo AS (
+    SELECT
+        TITLE,
+        BOARD_ID
+    FROM
+        USED_GOODS_BOARD
+    WHERE 1 = 1
+        AND DATE_FORMAT(CREATED_DATE, '%Y-%m') = '2022-10'
+)
+
+SELECT
+    bo.TITLE,
+    bo.BOARD_ID,
+    re.REPLY_ID,
+    re.WRITER_ID,
+    re.CONTENTS,
+    DATE_FORMAT(re.CREATED_DATE, '%Y-%m-%d') AS CREATED_DATE
+FROM bo
+INNER JOIN USED_GOODS_REPLY AS re
+ON 1 = 1
+    AND bo.BOARD_ID = re.BOARD_ID
+ORDER BY
+    CREATED_DATE ASC,
+    TITLE ASC
+;
