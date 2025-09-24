@@ -1,0 +1,38 @@
+WITH imp AS (
+    SELECT
+        CAR_ID
+    FROM
+        CAR_RENTAL_COMPANY_RENTAL_HISTORY
+    WHERE 1 = 1
+        AND END_DATE > '2022-11-01'
+        AND START_DATE < '2022-11-30'
+), car AS (
+    SELECT
+        CAR_ID,
+        CAR_TYPE,
+        DAILY_FEE
+    FROM
+        CAR_RENTAL_COMPANY_CAR
+    WHERE
+        CAR_TYPE IN ('세단', 'SUV')
+        AND CAR_ID NOT IN (SELECT CAR_ID FROM imp)
+)
+
+SELECT
+    car.CAR_ID,
+    car.CAR_TYPE,
+    ROUND(car.DAILY_FEE * (100 - p.DISCOUNT_RATE) / 100 * 30) AS FEE
+FROM
+    car
+INNER JOIN CAR_RENTAL_COMPANY_DISCOUNT_PLAN AS p
+ON 1 = 1
+    AND p.CAR_TYPE = car.CAR_TYPE
+WHERE 1 = 1
+    AND p.DURATION_TYPE = '30일 이상'
+    AND car.DAILY_FEE * (100 - p.DISCOUNT_RATE) / 100 * 30 >= 500000
+    AND car.DAILY_FEE * (100 - p.DISCOUNT_RATE) / 100 * 30 < 2000000
+ORDER BY
+    FEE DESC,
+    car.CAR_TYPE ASC,
+    car.CAR_ID DESC
+;
