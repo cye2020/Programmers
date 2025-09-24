@@ -1,0 +1,18 @@
+WITH n AS (
+    SELECT
+        ROW_NUMBER() OVER(
+            ORDER BY ANIMAL_ID
+        ) AS NUM
+    FROM ANIMAL_OUTS
+    LIMIT 24
+)
+
+SELECT
+    n.NUM - 1 AS HOUR,
+    COUNT(ao.ANIMAL_ID) AS COUNT
+FROM n
+LEFT JOIN ANIMAL_OUTS AS ao
+ON 1 = 1
+    AND n.NUM - 1 = HOUR(ao.DATETIME)
+GROUP BY n.NUM
+;
